@@ -5,21 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Passport</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qr-scanner/1.4.2/qr-scanner.umd.min.js"></script>
 </head>
 <body>
     <div class="passport-container">
         <div class="passport-header">
-            <h1>🛂 Digital Passport</h1>
+            <h1>Digital Passport</h1>
             <p>Collect stamps on your journey</p>
         </div>
         
         <div class="passport-content">
             <!-- Welcome Screen -->
             <div id="welcome-screen" class="welcome-screen">
-                <h2>Welcome, Traveler!</h2>
-                <p>Ready to start your digital journey? Scan QR codes at different locations to collect stamps in your passport.</p>
-                <button class="btn" onclick="startScanning()">Start Scanning QR Codes</button>
+                <h2>🚀 Welcome, Explorer!</h2>
+                <p class="space-text">Ready to start World Explorer? Answer the question correctly and scan QR code at the location to collect a stamp in your passport.</p>
+                <div class="mission-stats">
+                    <div class="astronaut-container">
+                    <img src="images/austronaut.png" alt="Astronaut" class="astronaut-image">
+                </div>
+                </div>
+                <button class="btn space-btn" onclick="startScanning()">
+                    <span class="btn-icon">🎫</span>
+                    Collect your first stamp
+                </button>
             </div>
             
             <!-- Scanning Screen -->
@@ -57,7 +66,5 @@
             <div id="message-container"></div>
         </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
