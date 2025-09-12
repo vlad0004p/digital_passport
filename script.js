@@ -53,34 +53,42 @@ function stopScanning() {
 
 function handleQRCode(data) {
     try {
-        // Expected format: "Location Name|image_url" or just "Location Name"
-        const parts = data.split('|');
-        const location = parts[0];
-        const imageUrl = parts[1] || null;
-        
-        // Check if this location is already collected
-        if (stamps.find(stamp => stamp.location === location)) {
+        // Expected: just the file name of the stamp image, e.g. "France.png"
+        const fileName = data.trim();
+
+        if (!fileName.endsWith('.png') && !fileName.endsWith('.jpg')) {
+            showMessage('Invalid QR code format', 'error');
+            return;
+        }
+
+        const imagePath = `images/stamps/${fileName}`;
+        const locationName = fileName.replace(/\.[^/.]+$/, ""); // remove file extension
+
+        // Check if already collected
+        if (stamps.find(stamp => stamp.location === locationName)) {
             showMessage('You already have this stamp!', 'error');
             return;
         }
-        
+
         // Add new stamp
         const newStamp = {
-            location: location,
-            image: imageUrl,
+            location: locationName,
+            image: imagePath,
             timestamp: new Date().toLocaleString()
         };
-        
+
         stamps.push(newStamp);
-        showMessage(`New stamp added: ${location}!`, 'success');
+        saveStamps(); // save progress
+        showMessage(`New stamp added: ${locationName}!`, 'success');
         updateStampsDisplay();
-        
+
         // Auto-show passport after collecting a stamp
         setTimeout(() => {
             showPassport();
         }, 1500);
-        
+
     } catch (error) {
+        console.error(error);
         showMessage('Invalid QR code format', 'error');
     }
 }
@@ -106,7 +114,7 @@ function updateStampsDisplay() {
     
     container.innerHTML = stamps.map(stamp => `
         <div class="stamp">
-            ${stamp.image ? `<img src="${stamp.image}" alt="${stamp.location}" onerror="this.style.display='none'">` : '🏛️'}
+            <img src="${stamp.image}" alt="${stamp.location}" onerror="this.style.display='none'">
             <div class="stamp-location">${stamp.location}</div>
             <div class="stamp-time">${stamp.timestamp}</div>
         </div>
@@ -114,11 +122,9 @@ function updateStampsDisplay() {
 }
 
 function downloadPassport() {
-    // Create a canvas to draw the passport
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     
-    // Set canvas size
     canvas.width = 800;
     canvas.height = 1000;
     
@@ -151,12 +157,10 @@ function downloadPassport() {
         const x = 50 + (index % 2) * 350;
         const y = 220 + Math.floor(index / 2) * 150;
         
-        // Stamp border
         ctx.strokeStyle = '#e74c3c';
         ctx.lineWidth = 3;
         ctx.strokeRect(x, y, 300, 120);
         
-        // Stamp content
         ctx.fillStyle = '#2c3e50';
         ctx.font = 'bold 18px Arial';
         ctx.fillText(stamp.location, x + 10, y + 30);
@@ -165,18 +169,15 @@ function downloadPassport() {
         ctx.fillStyle = '#666';
         ctx.fillText(stamp.timestamp, x + 10, y + 55);
         
-        // Add emoji as placeholder for image
         ctx.font = '40px Arial';
         ctx.fillText('🏛️', x + 240, y + 70);
     });
     
-    // Add generation timestamp
     ctx.fillStyle = '#999';
     ctx.font = '12px Arial';
     ctx.textAlign = 'center';
     ctx.fillText(`Generated on ${new Date().toLocaleString()}`, canvas.width/2, canvas.height - 20);
     
-    // Download the image
     const link = document.createElement('a');
     link.download = `digital-passport-${Date.now()}.png`;
     link.href = canvas.toDataURL();
@@ -185,10 +186,23 @@ function downloadPassport() {
     showMessage('Passport image downloaded!', 'success');
 }
 
+// ---- Local Storage Support ----
+function saveStamps() {
+    localStorage.setItem('passportStamps', JSON.stringify(stamps));
+}
+
+function loadStamps() {
+    const saved = localStorage.getItem('passportStamps');
+    if (saved) {
+        stamps = JSON.parse(saved);
+        updateStampsDisplay();
+    }
+}
+
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if QR Scanner is supported
     if (!QrScanner.hasCamera()) {
         showMessage('No camera found on this device', 'error');
     }
+    loadStamps(); // restore saved progress
 });
