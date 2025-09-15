@@ -153,28 +153,25 @@ body {
 
 .stamps-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(2, 1fr); /* ✅ exactly 2 columns */
+    gap: 20px; /* more spacing between stamps */
     margin-top: 20px;
+    justify-items: center; /* center stamps horizontally */
 }
 
 .stamp {
     background: white;
-    border: 3px solid #e74c3c;
-    border-radius: 10px;
-    padding: 15px;
+    border-radius: 12px;
+    padding: 20px; /* slightly more padding */
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: transform 0.2s;
-}
-
-.stamp:hover {
-    transform: translateY(-2px);
+    width: 100%; /* fill the column */
+    max-width: 160px; /* optional: limit so they don’t get too wide */
 }
 
 .stamp img {
-    max-width: 80px;
-    max-height: 80px;
+    max-width: 100px; /* ✅ bigger stamp images */
+    max-height: 100px;
     object-fit: contain;
     margin-bottom: 10px;
 }
@@ -228,3 +225,21 @@ body {
     text-align: center;
     border: 1px solid #f5c6cb;
 }   
+
+.reset-container {
+    position: fixed;
+    bottom: 20px;      /* distance from bottom of page */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;     /* make sure it's above other content */
+}
+
+.reset-btn {
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+}
