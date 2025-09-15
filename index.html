@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,30 +11,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 </head>
+
 <body>
     <div class="passport-container">
         <div class="passport-header">
             <h1>Digital Passport</h1>
             <p>Collect stamps on your journey</p>
-
         </div>
-        
+
         <div class="passport-content">
             <!-- Welcome Screen -->
             <div id="welcome-screen" class="welcome-screen">
                 <h2>🚀 Welcome, Explorer!</h2>
-                <p class="space-text">Ready to start World Explorer? Answer the question correctly and scan QR code at the location to collect a stamp in your passport.</p>
+                <p class="space-text">Ready to start World Explorer? Answer the question correctly and scan QR code at
+                    the location to collect a stamp in your passport.</p>
                 <div class="mission-stats">
                     <div class="astronaut-container">
-                    <img src="images/austronaut.png" alt="Astronaut" class="astronaut-image">
-                </div>
+                        <img src="images/austronaut.png" alt="Astronaut" class="astronaut-image">
+                    </div>
                 </div>
                 <button class="btn space-btn" onclick="startScanning()">
                     <span class="btn-icon">🎫</span>
                     Collect your first stamp
                 </button>
             </div>
-            
+
             <!-- Scanning Screen -->
             <div id="scanning-screen" class="hidden">
                 <div class="camera-container">
@@ -45,7 +47,7 @@
                 <button class="btn btn-secondary" onclick="stopScanning()">Stop Scanning</button>
                 <button class="btn btn-success" onclick="showPassport()">View My Passport</button>
             </div>
-            
+
             <!-- Passport View -->
             <div id="passport-screen" class="hidden">
                 <div class="stamps-header">
@@ -54,17 +56,18 @@
                         <span id="stamps-count">0</span> stamps collected
                     </div>
                 </div>
-                
+
                 <div id="stamps-container" class="stamps-grid">
                     <!-- Stamps will be added here -->
                 </div>
-                
+
                 <div style="margin-top: 30px;">
                     <button class="btn" id="start-scanning-btn" onclick="startScanning()">Scan More QR Codes</button>
-                    <button class="btn btn-success" id="download-passport-btn" onclick="downloadPassport()">Download Passport Image</button>
+                    <button class="btn btn-success" id="download-passport-btn" onclick="downloadPassport()">Download
+                        Passport Image</button>
                 </div>
             </div>
-            
+
             <!-- Messages -->
             <div id="message-container"></div>
         </div>
@@ -75,4 +78,5 @@
         </button>
     </div>
 </body>
+
 </html>
