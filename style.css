@@ -227,19 +227,35 @@ body {
 }   
 
 .reset-container {
-    position: fixed;
-    bottom: 20px;      /* distance from bottom of page */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;     /* make sure it's above other content */
+    position: absolute; /* place relative to passport-container */
+    top: 10px;
+    right: 10px;
+    z-index: 10;
 }
 
 .reset-btn {
-    padding: 12px 25px;
-    border-radius: 25px;
-    font-size: 16px;
-    font-family: 'Orbitron', monospace;
-    font-weight: 700;
+    background: white;
+    border: none;
+    border-radius: 50%; /* makes it circular */
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     cursor: pointer;
-    text-transform: uppercase;
+    transition: background 0.3s ease, transform 0.2s ease;
+    padding: 0;
 }
+
+.reset-btn:hover {
+    background: #f0f0f0;
+    transform: scale(1.05);
+}
+
+.reset-icon {
+    width: 50px;
+    height: 50px;
+    pointer-events: none; /* so clicking hits the button, not the image */
+}
+
