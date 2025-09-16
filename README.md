@@ -19,7 +19,6 @@ A web application that allows users to collect digital stamps by scanning QR cod
 ## Demo
 
 ![Passport Screenshot](images/stars_background.jpg)  
-*(Replace with actual screenshot of the app if available.)*
 
 ---
 
